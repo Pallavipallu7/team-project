@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char str[100];
+    int len, pos;
+
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    len = strlen(str);
+
+    // The string must contain "101"
+    char *mid = strstr(str, "101");
+
+    if(mid == NULL) {
+        printf("String is NOT in the language.\n");
+        return 0;
+    }
+
+    // Check that before and after "101" only 0s and 1s appear
+    int valid = 1;
+
+    // Check left side (A → 0A | 1A | ε)
+    for (pos = 0; pos < mid - str; pos++) {
+        if(str[pos] != '0' && str[pos] != '1')
+            valid = 0;
+    }
+
+    // Check right side (A → 0A | 1A | ε)
+    for (pos = (mid - str) + 3; pos < len; pos++) {
+        if(str[pos] != '0' && str[pos] != '1')
+            valid = 0;
+    }
+
+    if(valid)
+        printf("String belongs to the language.\n");
+    else
+        printf("String is NOT in the language.\n");
+
+    return 0;
+}
